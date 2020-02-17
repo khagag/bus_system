@@ -25,7 +25,7 @@ SECRET_KEY = 'x-2aa)e33qz%wt8ambh2o&1$i#(f7++bqhe#cx#ysflmrpn8k+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["www.bsys.me"]
 
 
 # Application definition
