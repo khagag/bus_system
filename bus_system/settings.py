@@ -37,7 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    #added
+    'bsys.apps.BsysConfig',
 ]
+
+AUTH_USER_MODEL = 'bsys.CustomUser' # new
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
