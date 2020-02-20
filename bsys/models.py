@@ -1,12 +1,29 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser , BaseUserManager
+# from django.contrib.auth.models import User
+from django.db import transaction
 
 # Create your models here.
 
-class CustomUser(AbstractUser):
-    pass
+# class CustomUser(AbstractUser):
+#     pass
 
-class PrivilegedUser(CustomUser):
+class Role(models.Model):
+    ROLE_CHOICES = (
+        (1, 'Driver'),
+        (2, 'Admin'),
+    )
+    id = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, primary_key=True)
+    def __str__(self):
+        return self.get_id_display()
+
+class User(AbstractUser):
+    roles = models.ManyToManyField(Role)
+
+class Driver(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+
+class PrivilegedUser(User):
     # fName = models.CharField(max_length=30)
     # lName = models.CharField(max_length=30)
     # email = models.EmailField(_('email address'), unique=True)
@@ -16,13 +33,13 @@ class PrivilegedUser(CustomUser):
     #     return self.email
     pass
 
-class Driver(models.Model):
-    """docstring for ."""
-    # licence_numeber = models.CharField(max_length=30)
-    # def __init__(self, arg):
-    #     super(, self).__init__()
-    #     self.arg = arg
-    pass
+# class Driver(CustomUser):
+#     """docstring for ."""
+#     # licence_numeber = models.CharField(max_length=30)
+#     # def __init__(self, arg):
+#     #     super(, self).__init__()
+#     #     self.arg = arg
+#     pass
 
 class Bus(models.Model):
     """docstring for ."""

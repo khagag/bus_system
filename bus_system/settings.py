@@ -31,6 +31,8 @@ ALLOWED_HOSTS = ["www.bsys.me"]
 # Application definition
 
 INSTALLED_APPS = [
+    #added
+    'bsys.apps.BsysConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,11 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    #added
-    'bsys.apps.BsysConfig',
 ]
 
-AUTH_USER_MODEL = 'bsys.CustomUser' # new
+AUTH_USER_MODEL = 'bsys.User' # new
 
 
 MIDDLEWARE = [
