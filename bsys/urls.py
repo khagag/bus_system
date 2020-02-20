@@ -20,9 +20,10 @@ from . import views
 app_name = 'bsys'
 urlpatterns = [
     path("",views.index,name ='index'),
+    path("home/",views.home,name ='home'),
     # path("signup/",views.sign_up,name ='signup'),
     path('signup/', views.DriverSignUpView.as_view(), name='signup'),
     path("success/",views.success_test,name ='success'),
     path("faliur/",views.faliur_test,name ='faliur'),
-    path("logout/",views.logout_view,name ='logout'),
+    path("logout/",views.logout_view,name="logout"),
 ]

@@ -5,24 +5,33 @@ from django.shortcuts import redirect
 from django.views.generic import CreateView
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.template                import RequestContext
 
 from .forms import DriverSignUpForm
 from .models import User
 # Create your views here.
 
+
+def home(request):
+    auth = False
+    if request.user.is_authenticated:
+        auth = True
+    return render(request, 'home.html', {'auth':auth})
+
+
 def index(request):
+    if request.user.is_authenticated:
+        return redirect('/home/')
     if request.method == 'POST':
         form = FM.DriverAuthForm(data=request.POST)
         if form.is_valid():
-            username = request.POST['username']
-            password = request.POST['password']
-            user = authenticate(request, username=username, password=password)
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=raw_password)
             if user is not None:
-                form.save()
-                username = form.cleaned_data.get('username')
-                raw_password = form.cleaned_data.get('password')
-                user = authenticate(request,username=username, password=raw_password)
+                # user = authenticate(request,username=username, password=raw_password)
                 login(request, user)
+                return redirect("/success/")
     else:
         form = FM.DriverAuthForm()
     return render(request, 'index.html', {'form': form})
@@ -30,7 +39,8 @@ def index(request):
 @login_required(login_url='/success/')
 def logout_view(request):
     logout(request)
-
+    return render(request, 'index.html',
+               context_instance=RequestContext(request))
 
 class DriverSignUpView(CreateView):
     model = User
