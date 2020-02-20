@@ -12,33 +12,19 @@ from .models import User
 
 def index(request):
     if request.method == 'POST':
-        form = FM.DriverAuthForm(request.POST)
+        form = FM.DriverAuthForm(data=request.POST)
         if form.is_valid():
-            # username = request.POST['username']
-            # password = request.POST['password']
-            # user = authenticate(request, username=username, password=password)
-            # if user is not None:
-                # form.save()
-                # username = form.cleaned_data.get('username')
-                # raw_password = form.cleaned_data.get('password')
-                # user = authenticate(request,username=username, password=raw_password)
-                # login(request, user)
-
             username = request.POST['username']
             password = request.POST['password']
             user = authenticate(request, username=username, password=password)
             if user is not None:
+                form.save()
+                username = form.cleaned_data.get('username')
+                raw_password = form.cleaned_data.get('password')
+                user = authenticate(request,username=username, password=raw_password)
                 login(request, user)
-
-                # return redirect('/success/')
-                # Redirect to a success page.
-
-            # else:
-                # Return an 'invalid login' error message.
-                # return redirect('/faliur/')
-            # pass  # does nothing, just trigger the validation
     else:
-        form = FM.DriverAuthForm()#request.POST or None, request.FILES or None
+        form = FM.DriverAuthForm()
     return render(request, 'index.html', {'form': form})
 
 @login_required(login_url='/success/')
