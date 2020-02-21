@@ -17,7 +17,8 @@ def home(request):
     if request.user.is_authenticated:
         auth = True
     return render(request, 'home.html', {'auth':auth})
-
+def profile(request):
+    return render(request, 'profile/index.html')
 
 def index(request):
     if request.user.is_authenticated:

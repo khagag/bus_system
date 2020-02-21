@@ -26,4 +26,5 @@ urlpatterns = [
     path("success/",views.success_test,name ='success'),
     path("faliur/",views.faliur_test,name ='faliur'),
     path("logout/",views.logout_view,name="logout"),
+    path("profile/",views.profile,name="profile"),
 ]
