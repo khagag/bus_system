@@ -29,12 +29,12 @@ def profile(request):
     elif str(request.user.roles) == 'Driver':
         return render(request, 'profile/driver.html')
     else:
-        return redirect("/faliur/")
+        return redirect("/admin/")
 
 
 def index(request):
     if request.user.is_authenticated:
-        return redirect('/home/')
+        return redirect('/profile/')
     if request.method == 'POST':
         form = FM.DriverAuthForm(data=request.POST)
         if form.is_valid():
