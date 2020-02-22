@@ -18,10 +18,17 @@ class Role(models.Model):
         return self.get_id_display()
 
 class User(AbstractUser):
-    roles = models.ManyToManyField(Role)
+    roles = models.ForeignKey(
+        'Role',
+        on_delete=models.CASCADE,
+        default='Driver'
+    )
 
 class Driver(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    def __init__(self, *args, **kwargs):
+        self._meta.get_field('roles').default = 'Driver'
+        super(Driver, self).__init__(*args, **kwargs)
 
 class PrivilegedUser(User):
     # fName = models.CharField(max_length=30)
