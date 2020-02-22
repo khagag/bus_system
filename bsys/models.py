@@ -18,9 +18,9 @@ class Role(models.Model):
         return self.get_id_display()
 
 class User(AbstractUser):
-    roles = models.ForeignKey(
+    roles = models.ManyToManyField(
         'Role',
-        on_delete=models.CASCADE,
+        # on_delete=models.CASCADE,
         default='Driver'
     )
 
