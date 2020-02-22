@@ -6,9 +6,12 @@ from django.views.generic import CreateView
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.template                import RequestContext
-
+import logging
 from .forms import DriverSignUpForm
 from .models import User
+
+
+logger = logging.getLogger(__name__)
 # Create your views here.
 
 
@@ -17,8 +20,17 @@ def home(request):
     if request.user.is_authenticated:
         auth = True
     return render(request, 'home.html', {'auth':auth})
+
+@login_required(login_url='/')
 def profile(request):
-    return render(request, 'profile/index.html')
+    logger.warning(request.user.roles)
+    if str(request.user.roles) == 'Admin':
+        return render(request, 'profile/index.html')
+    elif str(request.user.roles) == 'Driver':
+        return render(request, 'profile/driver.html')
+    else:
+        return redirect("/faliur/")
+
 
 def index(request):
     if request.user.is_authenticated:
@@ -32,7 +44,7 @@ def index(request):
             if user is not None:
                 # user = authenticate(request,username=username, password=raw_password)
                 login(request, user)
-                return redirect("/success/")
+                return redirect("/profile/")
     else:
         form = FM.DriverAuthForm()
     return render(request, 'index.html', {'form': form})
@@ -40,8 +52,7 @@ def index(request):
 @login_required(login_url='/success/')
 def logout_view(request):
     logout(request)
-    return render(request, 'index.html',
-               context_instance=RequestContext(request))
+    return render(request, 'index.html')
 
 class DriverSignUpView(CreateView):
     model = User
