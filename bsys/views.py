@@ -52,7 +52,7 @@ def index(request):
 @login_required(login_url='/success/')
 def logout_view(request):
     logout(request)
-    return render(request, 'index.html')
+    return redirect('/')
 
 class DriverSignUpView(CreateView):
     model = User
