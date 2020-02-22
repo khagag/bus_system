@@ -24,12 +24,6 @@ class User(AbstractUser):
         default='Driver'
     )
 
-class Driver(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    bus = models.OneToOneField(Bus ,on_delete=models.SET_NULL)
-    def __init__(self, *args, **kwargs):
-        self._meta.get_field('roles').default = 'Driver'
-        super(Driver, self).__init__(*args, **kwargs)
 
 class PrivilegedUser(User):
     # fName = models.CharField(max_length=30)
@@ -51,11 +45,18 @@ class PrivilegedUser(User):
 
 class Bus(models.Model):
     """docstring for ."""
-    
+
     # def __init__(self, arg):
     #     super(, self).__init__()
     #     self.arg = arg
     pass
+
+class Driver(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    bus = models.OneToOneField(Bus ,null=True,on_delete=models.SET_NULL)
+    def __init__(self, *args, **kwargs):
+        self._meta.get_field('roles').default = 'Driver'
+        super(Driver, self).__init__(*args, **kwargs)
 
 class RoadLines(models.Model):
     """docstring for ."""
