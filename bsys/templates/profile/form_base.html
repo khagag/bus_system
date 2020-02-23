@@ -1,0 +1,62 @@
+{% extends "profile/base_profile.html" %}
+{% load static %}
+
+{% block content %}
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <strong>{{ form_title }}</strong>
+                </div>
+                <div class="card-body card-block">
+                    <form id={{ form_id }} method="post" enctype="multipart/form-data" class="form-horizontal">
+                      {% csrf_token %}
+
+                      {{ form.non_field_errors }}
+
+                      {% for hidden_field in form.hidden_fields %}
+                        {{ hidden_field.errors }}
+                        {{ hidden_field }}
+                      {% endfor %}
+
+                      {% for field in form.visible_fields %}
+
+                        <div class="row form-group">
+                          <div class="col col-md-3"><label class=" form-control-label">{{field.label}}</label></div>
+
+                            {{ field }}
+
+                          {% for error in field.errors %}
+                            <span>{{error}}</span>
+                          {% endfor %}
+
+                        </div>
+
+
+
+
+
+                      {% endfor %}
+                        <!-- <div class="row form-group">
+                            <div class="col col-md-3"><label for="file-multiple-input" class=" form-control-label">Multiple File input</label></div>
+                            <div class="col-12 col-md-9"><input type="file" id="file-multiple-input" name="file-multiple-input" multiple="" class="form-control-file"></div>
+                        </div> -->
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" form= {{ form_id }} class="btn btn-primary btn-sm">
+                        <i class="fa fa-dot-circle-o"></i> Submit
+                    </button>
+                    <button type="reset"form= {{ form_id }}  class="btn btn-danger btn-sm">
+                        <i class="fa fa-ban"></i> Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <form method="post" novalidate class="container">
+      <input type="submit" class="btnSubmit" value="Login"/>
+    </form> -->
+</div>
+{% endblock %}
