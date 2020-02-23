@@ -39,6 +39,7 @@ class Manager(models.Model):
 class Bus(models.Model):
     """docstring for ."""
     licenceCode = models.CharField(max_length=20,null=True)
+    status = models.BooleanField("status",default=False)
     lastCheckUp = models.DateField(null=True)
     def __str__(self):
         return self.licenceCode
