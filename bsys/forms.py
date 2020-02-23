@@ -7,18 +7,24 @@ from django.db import transaction
 
 
 class DriverSignUpForm(UserCreationForm):
-    class Meta(UserCreationForm.Meta):
-            model = User
+    bus = forms.ModelChoiceField(MD.Bus.objects.all(),required=False,label="choose bus")
     def __init__(self, *args, **kwargs):
         super(DriverSignUpForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
             visible.field.widget.attrs['placeholder'] = visible.field.label
-
+    class Meta(UserCreationForm.Meta):
+            model = User
+            fields = [
+                'username',
+                "first_name",
+                "last_name",
+                "email",
+            ]
     @transaction.atomic
     def save(self):
         user = super().save(commit=False)
-        user.Role = 1
+        user.is_driver = True
         user.save()
         driver = MD.Driver.objects.create(user=user)
         return user
@@ -31,84 +37,48 @@ class DriverAuthForm(AuthenticationForm):
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
             visible.field.widget.attrs['placeholder'] = visible.field.label
+    # role = forms.CharField(
+    #     widget=forms.HiddenInput(),
+    #     required = False,
+    #     initial=1
+    # )
 
-            # class Meta:
-            #     model = MD.User
-            #     fields = ('username', 'email')
-
-
-# class AdminSignUpForm(UserCreationForm):
-#     class Meta(UserCreationForm.Meta):
-#             model = User
-#
-#     @transaction.atomic
-#     def save(self):
-#         user = super().save(commit=False)
-#         user.Role = 1
-#         user.save()
-#         driver = MD.Driver.objects.create(user=user)
-#         return user
-#
-
-
-
-
-class PrivilegedUserAuthForm(AuthenticationForm):
+class ManagerAuthForm(AuthenticationForm):
     def confirm_login_allowed(self, user):
         pass
 
     def __init__(self, *args, **kwargs):
-        super(PrivilegedUserAuthForm, self).__init__(*args, **kwargs)
+        super(ManagerAuthForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
             visible.field.widget.attrs['placeholder'] = visible.field.label
-
-    # class Meta:
-    #     model = MD.PrivilegedUser
-    #     fields = ('username', 'email')
-
-
-class PrivilegedUserCreationForm(UserCreationForm):
-
+    # role = forms.CharField(
+    #     widget=forms.HiddenInput(),
+    #     required = False,
+    #     initial=2
+    # )
+class ManagerCreationForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
-        super(PrivilegedUserCreationForm, self).__init__(*args, **kwargs)
+        super(ManagerCreationForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
             visible.field.widget.attrs['placeholder'] = visible.field.label
-
-    class Meta:
-        model = MD.PrivilegedUser
-        fields = ('username', 'email')
-
-
-class PrivilegedUserChangeForm(UserChangeForm):
-
-    class Meta:
-        model = MD.PrivilegedUser
-        fields = ('username', 'email')
-
-    # def __init__(self, *args, **kwargs):
-    #     super(PrivilegedUserChangeForm, self).__init__(*args, **kwargs)
-    #     for visible in self.visible_fields():
-    #         visible.field.widget.attrs['class'] = 'form-control'
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = '__all__'
+    @transaction.atomic
+    def save(self):
+        user = super().save(commit=False)
+        user.is_admin = True
+        user.save()
+        driver = MD.Manager.objects.create(user=user)
+        return user
 
 
-#
-#
-# class DriverCreationForm(UserCreationForm):
-#
-#     def __init__(self, *args, **kwargs):
-#         super(DriverCreationForm, self).__init__(*args, **kwargs)
-#         for visible in self.visible_fields():
-#             visible.field.widget.attrs['class'] = 'form-control'
-#             visible.field.widget.attrs['placeholder'] = visible.field.label
+
+
+
+# class ManagerUserChangeForm(UserChangeForm):
 #
 #     class Meta:
-#         model = MD.Driver
-#         fields = ('username', 'email')
-#
-# class DriverChangeForm(UserChangeForm):
-#
-#     class Meta:
-#         model = MD.Driver
-#         fields = ('username', 'email')
+#         model = MD.Manager

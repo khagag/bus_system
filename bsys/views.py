@@ -21,12 +21,13 @@ def home(request):
         auth = True
     return render(request, 'home.html', {'auth':auth})
 
-@login_required(login_url='/')
+# @login_required(login_url='/')
 def profile(request):
-    logger.warning(request.user.roles)
-    if str(request.user.roles) == 'Admin':
+    logger.warning(request.user.is_admin)
+    logger.warning(request.user.is_driver)
+    if request.user.is_admin:
         return render(request, 'profile/index.html')
-    elif str(request.user.roles) == 'Driver':
+    elif request.user.is_driver:
         return render(request, 'profile/driver.html')
     else:
         return redirect("/admin/")
@@ -35,8 +36,13 @@ def profile(request):
 def index(request):
     if request.user.is_authenticated:
         return redirect('/profile/')
+    AdForm = FM.DriverAuthForm()
+    DrForm = FM.DriverAuthForm()
     if request.method == 'POST':
-        form = FM.DriverAuthForm(data=request.POST)
+        if request.user.is_diver:
+            form = FM.DriverAuthForm(data=request.POST)
+        else:
+            form = FM.ManagerAuthForm(data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password')
@@ -45,11 +51,13 @@ def index(request):
                 # user = authenticate(request,username=username, password=raw_password)
                 login(request, user)
                 return redirect("/profile/")
-    else:
-        form = FM.DriverAuthForm()
-    return render(request, 'index.html', {'form': form})
+        if request.user.is_driver:
+            DrForm = form
+        else:
+            AdForm = form
+    return render(request, 'index.html', {'AdForm': AdForm,"DrForm":DrForm})
 
-@login_required(login_url='/success/')
+@login_required(login_url='/')
 def logout_view(request):
     logout(request)
     return redirect('/')
@@ -59,14 +67,10 @@ class DriverSignUpView(CreateView):
     form_class = DriverSignUpForm
     template_name = 'signup.html'
 
-    def get_context_data(self, **kwargs):
-        kwargs['user_type'] = 'student'
-        return super().get_context_data(**kwargs)
-
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('/success/')
+        return redirect('/profile/')
 
 def success_test(request):
     return render(request, 'st.html')
