@@ -26,7 +26,7 @@ def profile(request):
     logger.warning(request.user.is_admin)
     logger.warning(request.user.is_driver)
     if request.user.is_admin:
-        return render(request, 'profile/index.html')
+        return render(request, 'profile/admin.html')
     elif request.user.is_driver:
         return render(request, 'profile/driver.html')
     else:
@@ -36,10 +36,8 @@ def profile(request):
 def index(request):
     if request.user.is_authenticated:
         return redirect('/profile/')
-    AdForm = FM.DriverAuthForm()
-    DrForm = FM.DriverAuthForm()
     if request.method == 'POST':
-        if request.user.is_diver:
+        if request.POST['role'] == 1:
             form = FM.DriverAuthForm(data=request.POST)
         else:
             form = FM.ManagerAuthForm(data=request.POST)

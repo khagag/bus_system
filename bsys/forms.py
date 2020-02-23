@@ -37,11 +37,11 @@ class DriverAuthForm(AuthenticationForm):
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
             visible.field.widget.attrs['placeholder'] = visible.field.label
-    # role = forms.CharField(
-    #     widget=forms.HiddenInput(),
-    #     required = False,
-    #     initial=1
-    # )
+    role = forms.CharField(
+        widget=forms.HiddenInput(),
+        required = False,
+        initial=1
+    )
 
 class ManagerAuthForm(AuthenticationForm):
     def confirm_login_allowed(self, user):
@@ -52,11 +52,11 @@ class ManagerAuthForm(AuthenticationForm):
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
             visible.field.widget.attrs['placeholder'] = visible.field.label
-    # role = forms.CharField(
-    #     widget=forms.HiddenInput(),
-    #     required = False,
-    #     initial=2
-    # )
+    role = forms.CharField(
+        widget=forms.HiddenInput(),
+        required = False,
+        initial=2
+    )
 class ManagerCreationForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(ManagerCreationForm, self).__init__(*args, **kwargs)
