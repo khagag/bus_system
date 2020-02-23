@@ -40,11 +40,15 @@ class Bus(models.Model):
     """docstring for ."""
     licenceCode = models.CharField(max_length=20,null=True)
     lastCheckUp = models.DateField(null=True)
+    def __str__(self):
+        return self.licenceCode
 
 class Driver(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     bus = models.OneToOneField(Bus ,null=True,on_delete=models.SET_NULL)
     licenceNum = models.CharField(max_length=20,null=True)
+    def __str__(self):
+        return self.user.first_name
     def __init__(self, *args, **kwargs):
         # self._meta.get_field('is_driver').default = True
         super(Driver, self).__init__(*args, **kwargs)
