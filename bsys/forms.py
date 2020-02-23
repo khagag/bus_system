@@ -6,6 +6,15 @@ from .models import User
 from django.db import transaction
 
 
+class BusCreationForm(forms.ModelForm):
+    class Meta:
+        model = MD.Bus
+        fields = "__all__"
+        widgets = {
+                'lastCheckUp': forms.DateInput(format=('%m/%d/%Y'), attrs={'class':'form-control', 'placeholder':'Select a date', 'type':'date'}),
+            }
+
+
 class DriverSignUpForm(UserCreationForm):
     bus = forms.ModelChoiceField(MD.Bus.objects.all(),required=False,label="choose bus")
     def __init__(self, *args, **kwargs):
