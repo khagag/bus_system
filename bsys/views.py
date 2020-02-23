@@ -35,6 +35,11 @@ def profile(request):
     else:
         return redirect("/admin/")
 
+class BusUpdate(UpdateView):
+    model = MD.Bus
+    fields = "__all__"
+    template_name = "profile/BusEdit.html"
+    success_url = reverse_lazy('bsys:BusList')
 
 def index(request):
     if request.user.is_authenticated:

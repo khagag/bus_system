@@ -19,7 +19,8 @@
     <tr>
       <td>{{ bus.licenceCode }}</td>
       <td>{{ bus.lastCheckUp }}</td>
-      <td><a href="#">Edit</a></td>
+      <!-- <td><a href="#">Edit</a></td> -->
+      <td><a href="{% url "bsys:BusEdit" bus.id %}">Edit</a></td>
       <td><a href="{% url "bsys:BusDelete" bus.id %}">delete</a></td>
 
     </tr>

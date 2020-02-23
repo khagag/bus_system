@@ -24,6 +24,7 @@ urlpatterns = [
     path('profile/b/delete/<int:pk>', views.BusDeleteView.as_view(), name='BusDelete'),
     path('profile/d/delete/<int:pk>', views.DriverDeleteView.as_view(), name='DriverDelete'),
     # path("signup/",views.sign_up,name ='signup'),
+    path('profile/b/edit/<int:pk>', views.BusUpdate.as_view(), name='BusEdit'),
     path('profile/b/list/', views.BusList.as_view(), name='BusList'),
     path('profile/d/list/', views.DriverList.as_view(), name='DriverList'),
     path('signup/', views.DriverSignUpView.as_view(), name='signup'),
