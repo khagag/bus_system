@@ -1,0 +1,30 @@
+{% extends "profile/base_profile.html" %}
+{% load static %}
+
+{% block content %}
+<h1>buses</h1>
+
+<table border="1">
+<thead>
+    <tr>
+    <th>licence Code</th>
+    <th>lastCheck Up</th>
+    <!-- <th>View</th> -->
+    <th>Edit</th>
+    <th>Delete</th>
+    </tr>
+</thead>
+<tbody>
+    {% for bus in object_list %}
+    <tr>
+      <td>{{ bus.licenceCode }}</td>
+      <td>{{ bus.lastCheckUp }}</td>
+      <td><a href="#">Edit</a></td>
+      <td><a href="{% url "bsys:BusDelete" bus.id %}">delete</a></td>
+
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+
+{% endblock %}

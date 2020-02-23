@@ -1,0 +1,32 @@
+{% extends "profile/base_profile.html" %}
+{% load static %}
+
+{% block content %}
+<h1>drivers</h1>
+
+<table border="1">
+<thead>
+    <tr>
+    <th>UserName</th>
+    <th>Bus</th>
+    <th>licence Code</th>
+    <!-- <th>View</th> -->
+    <th>Edit</th>
+    <th>Delete</th>
+    </tr>
+</thead>
+<tbody>
+    {% for driver in object_list %}
+    <tr>
+      <td>{{ driver.user }}</td>
+      <td>{{ driver.bus }}</td>
+      <td>{{ driver.licenceNum }}</td>
+      <td><a href="#">Edit</a></td>
+      <td><a href="{% url "bsys:DriverDelete" driver.user.id %}">delete</a></td>
+
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+
+{% endblock %}

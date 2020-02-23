@@ -9,7 +9,10 @@ from django.template                import RequestContext
 import logging
 from .forms import DriverSignUpForm
 from .models import User
-
+from . import models as MD
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 logger = logging.getLogger(__name__)
 # Create your views here.
@@ -79,6 +82,55 @@ class DriverSignUpFormView(CreateView):
         user = form.save()
         login(self.request, user)
         return redirect('/profile/d/create/')
+
+def BusCreationFormView(request):
+    if request.method == "POST":
+        form = FM.BusCreationForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                # return redirect('/show')
+            except:
+                pass
+    else:
+        form = FM.BusCreationForm()
+    return render(request,'profile/form_base.html',{'form':form,"form_id":"BusForm","form_title":"Bus Creation"})
+
+
+class BusList(ListView):
+    model = MD.Bus
+    template_name = "profile/BusList.html"
+
+class DriverList(ListView):
+    model = MD.Driver
+    template_name = "profile/DriverList.html"
+
+class BusDeleteView(DeleteView):
+    model = MD.Bus
+    template_name="profile/BusDeleteConfirm.html"
+    success_url = reverse_lazy('bsys:BusList')
+
+class DriverDeleteView(DeleteView):
+    model = MD.Driver
+    template_name="profile/BusDeleteConfirm.html"
+    success_url = reverse_lazy('bsys:DriverList')
+
+
+def BusUpdateView(request, pk, template_name='profile/form_base.html'):
+    Bus= get_object_or_404(MD.Bus, pk=pk)
+    form = FM.BusCreationForm(request.POST or None, instance=MD.Bus)
+    if form.is_valid():
+        form.save()
+        return redirect('/profile/b/update/?status=success')
+    return render(request, template_name, {'form':form})
+
+# def book_delete(request, pk, template_name='books/book_confirm_delete.html'):
+#     book= get_object_or_404(Book, pk=pk)
+#     if request.method=='POST':
+#         book.delete()
+#         return redirect('book_list')
+#     return render(request, template_name, {'object':book})
+
 
 
 def success_test(request):
