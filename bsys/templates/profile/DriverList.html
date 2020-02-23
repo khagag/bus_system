@@ -11,7 +11,8 @@
     <th>Bus</th>
     <th>licence Code</th>
     <!-- <th>View</th> -->
-    <th>Edit</th>
+    <th>Edit driver specific data</th>
+    <th>Edit driver personal data</th>
     <th>Delete</th>
     </tr>
 </thead>
@@ -22,6 +23,7 @@
       <td>{{ driver.bus }}</td>
       <td>{{ driver.licenceNum }}</td>
       <td><a href="{% url "bsys:DriverEdit" driver.user.id %}">Edit</a></td>
+      <td><a href="{% url "bsys:DriverPersonalEdit" driver.user.id %}">Edit</a></td>
       <td><a href="{% url "bsys:DriverDelete" driver.user.id %}">delete</a></td>
 
     </tr>

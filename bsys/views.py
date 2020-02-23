@@ -53,17 +53,17 @@ class DriverUpdate(UpdateView):
     template_name = "profile/DriverEdit.html"
     success_url = reverse_lazy('bsys:DriverList')
 
-# class DriverUpdatePersonal(UpdateView):
-#     model = MD.User
-#     # user_formset = inlineformset_factory(MD.User,fields="first_name")
-#     fields = [
-#         "first_name",
-#         "last_name",
-#         "email",
-#
-#     ]
-#     template_name = "profile/DriverPersonalEdit.html"
-#     success_url = reverse_lazy('bsys:DriverPersonalList')
+class DriverUpdatePersonal(UpdateView):
+    model = MD.User
+    # user_formset = inlineformset_factory(MD.User,fields="first_name")
+    fields = [
+        "first_name",
+        "last_name",
+        "email",
+
+    ]
+    template_name = "profile/DriverPersonalEdit.html"
+    success_url = reverse_lazy('bsys:DriverPersonalList')
 
 
 
