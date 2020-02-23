@@ -73,27 +73,27 @@
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active">
-                        <a href="#"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
+                        <a href="{% url 'bsys:profile' %}"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
                     </li>
                     <li class="menu-title">Drivers </li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
                         <a href="{% url 'bsys:driverCreate' %}" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>Create</a>
                     </li>
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Update</a>
+                        <a href="{% url 'bsys:DriverList' %}" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Update/Delete</a>
                     </li>
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Delete</a>
+                        <!-- <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Delete</a> -->
                     </li>
                     <li class="menu-title">Buses </li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>Create</a>
+                        <a href="{% url 'bsys:BusCreate' %}" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>Create</a>
                     </li>
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Update</a>
+                        <a href="{% url 'bsys:BusList' %}" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Update/Delete</a>
                     </li>
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Delete</a>
+                        <!-- <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Delete</a> -->
                     </li>
 
                 </ul>
@@ -107,12 +107,12 @@
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="./"><h3>Bus Sys</h3><!--<img src="{% static 'images/logo.png'%}" alt="Logo">--></a>
+                    <a class="navbar-brand" href="{% url 'bsys:profile' %}"><h3>Bus Sys</h3><!--<img src="{% static 'images/logo.png'%}" alt="Logo">--></a>
                     <a class="navbar-brand hidden" href="./"><img src="{% static 'images/logo2.png'%}" alt="Logo">--></a>
                     <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
                 </div>
             </div>
-            <div class="top-right">
+            <div class="top-right"> 
                 <div class="header-menu">
                     <div class="header-left">
                         <button class="search-trigger"><i class="fa fa-search"></i></button>
