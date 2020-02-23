@@ -29,8 +29,9 @@ def profile(request):
     logger.warning(request.user.is_admin)
     logger.warning(request.user.is_driver)
     if request.user.is_admin:
-        return render(request, 'profile/admin.html')
+        return render(request, 'profile/admin.html',{"drivers":MD.Driver.objects.all()})
     elif request.user.is_driver:
+
         return render(request, 'profile/driver.html')
     else:
         return redirect("/admin/")
