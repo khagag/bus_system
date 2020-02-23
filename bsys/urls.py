@@ -27,4 +27,5 @@ urlpatterns = [
     path("faliur/",views.faliur_test,name ='faliur'),
     path("logout/",views.logout_view,name="logout"),
     path("profile/",views.profile,name="profile"),
+    path('profile/d/create/', views.DriverSignUpFormView.as_view(), name='driverCreate'),
 ]

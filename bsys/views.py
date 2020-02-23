@@ -70,6 +70,17 @@ class DriverSignUpView(CreateView):
         login(self.request, user)
         return redirect('/profile/')
 
+class DriverSignUpFormView(CreateView):
+    model = User
+    form_class = DriverSignUpForm
+    template_name = 'profile/DriverCreate.html'
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('/profile/d/create/')
+
+
 def success_test(request):
     return render(request, 'st.html')
 
