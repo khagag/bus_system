@@ -21,7 +21,7 @@
       <td>{{ driver.user }}</td>
       <td>{{ driver.bus }}</td>
       <td>{{ driver.licenceNum }}</td>
-      <td><a href="#">Edit</a></td>
+      <td><a href="{% url "bsys:DriverEdit" driver.user.id %}">Edit</a></td>
       <td><a href="{% url "bsys:DriverDelete" driver.user.id %}">delete</a></td>
 
     </tr>

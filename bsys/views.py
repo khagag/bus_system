@@ -41,6 +41,32 @@ class BusUpdate(UpdateView):
     template_name = "profile/BusEdit.html"
     success_url = reverse_lazy('bsys:BusList')
 
+# from django.forms import inlineformset_factory
+
+class DriverUpdate(UpdateView):
+    model = MD.Driver
+    # TODO: create a form class that exclude user / form that include user editable fields and use it as form_class
+    fields = [
+        "bus",
+        "licenceNum"
+    ]
+    template_name = "profile/DriverEdit.html"
+    success_url = reverse_lazy('bsys:DriverList')
+
+# class DriverUpdatePersonal(UpdateView):
+#     model = MD.User
+#     # user_formset = inlineformset_factory(MD.User,fields="first_name")
+#     fields = [
+#         "first_name",
+#         "last_name",
+#         "email",
+#
+#     ]
+#     template_name = "profile/DriverPersonalEdit.html"
+#     success_url = reverse_lazy('bsys:DriverPersonalList')
+
+
+
 def index(request):
     if request.user.is_authenticated:
         return redirect('/profile/')
