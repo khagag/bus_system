@@ -80,7 +80,11 @@ WSGI_APPLICATION = 'bus_system.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> b41ae8544fcd86f64b63c3ac9af807cf04ba83ce
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'bus_sys',
