@@ -43,7 +43,6 @@ class BusUpdate(UpdateView):
     success_url = reverse_lazy('bsys:BusList')
 
 # from django.forms import inlineformset_factory
-
 class DriverUpdate(UpdateView):
     model = MD.Driver
     # TODO: create a form class that exclude user / form that include user editable fields and use it as form_class
@@ -71,25 +70,31 @@ class DriverUpdatePersonal(UpdateView):
 def index(request):
     if request.user.is_authenticated:
         return redirect('/profile/')
-    DrForm = FM.DriverAuthForm()
-    AdForm = FM.ManagerAuthForm()
     if request.method == 'POST':
-        if request.POST['role'] == 1:
+        logger.warning(str(request.POST['role']) == str(1))
+        DrForm = FM.DriverAuthForm()
+        AdForm = FM.ManagerAuthForm()
+        if str(request.POST['role']) == str(1):
             form = FM.DriverAuthForm(data=request.POST)
         else:
             form = FM.ManagerAuthForm(data=request.POST)
         if form.is_valid():
+            logger.warning("form validate")
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password')
             user = authenticate(request, username=username, password=raw_password)
+            logger.warning(user.first_nam)
             if user is not None:
+                logger.warning("user not none")
                 # user = authenticate(request,username=username, password=raw_password)
                 login(request, user)
                 return redirect("/profile/")
-            if request.user.is_driver:
-                DrForm = form
             else:
-                AdForm = form
+                logger.warning("form error")
+        if str(request.POST['role']) == str(1):
+            DrForm = form
+        else:
+            AdForm = form
     return render(request, 'index.html', {'AdForm': AdForm,"DrForm":DrForm})
 
 @login_required(login_url='/')
@@ -107,6 +112,7 @@ class DriverSignUpView(CreateView):
         login(self.request, user)
         return redirect('/profile/')
 
+
 class DriverSignUpFormView(CreateView):
     model = User
     form_class = DriverSignUpForm
@@ -117,6 +123,7 @@ class DriverSignUpFormView(CreateView):
         login(self.request, user)
         return redirect('/profile/d/create/')
 
+@login_required(login_url='/')
 def BusCreationFormView(request):
     if request.method == "POST":
         form = FM.BusCreationForm(request.POST)
@@ -129,7 +136,6 @@ def BusCreationFormView(request):
     else:
         form = FM.BusCreationForm()
     return render(request,'profile/form_base.html',{'form':form,"form_id":"BusForm","form_title":"Bus Creation"})
-
 
 class BusList(ListView):
     model = MD.Bus
@@ -149,7 +155,7 @@ class DriverDeleteView(DeleteView):
     template_name="profile/BusDeleteConfirm.html"
     success_url = reverse_lazy('bsys:DriverList')
 
-
+@login_required(login_url='/')
 def BusUpdateView(request, pk, template_name='profile/form_base.html'):
     Bus= get_object_or_404(MD.Bus, pk=pk)
     form = FM.BusCreationForm(request.POST or None, instance=MD.Bus)
