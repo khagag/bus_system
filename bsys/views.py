@@ -24,7 +24,7 @@ def home(request):
         auth = True
     return render(request, 'home.html', {'auth':auth})
 
-# @login_required(login_url='/')
+@login_required(login_url='/')
 def profile(request):
     logger.warning(request.user.is_admin)
     logger.warning(request.user.is_driver)
@@ -71,6 +71,8 @@ class DriverUpdatePersonal(UpdateView):
 def index(request):
     if request.user.is_authenticated:
         return redirect('/profile/')
+    DrForm = FM.DriverAuthForm()
+    AdForm = FM.ManagerAuthForm()
     if request.method == 'POST':
         if request.POST['role'] == 1:
             form = FM.DriverAuthForm(data=request.POST)
@@ -84,10 +86,10 @@ def index(request):
                 # user = authenticate(request,username=username, password=raw_password)
                 login(request, user)
                 return redirect("/profile/")
-        if request.user.is_driver:
-            DrForm = form
-        else:
-            AdForm = form
+            if request.user.is_driver:
+                DrForm = form
+            else:
+                AdForm = form
     return render(request, 'index.html', {'AdForm': AdForm,"DrForm":DrForm})
 
 @login_required(login_url='/')
