@@ -67,6 +67,7 @@
 </head>
 
 <body>
+  {% if user.is_admin %}
     <!-- Left Panel -->
     <aside id="left-panel" class="left-panel">
         <nav class="navbar navbar-expand-sm navbar-default">
@@ -95,12 +96,13 @@
                     <li class="menu-item-has-children dropdown">
                         <!-- <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Delete</a> -->
                     </li>
-
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>
     </aside>
     <!-- /#left-panel -->
+    {% endif %}
+
     <!-- Right Panel -->
     <div id="right-panel" class="right-panel">
         <!-- Header-->
