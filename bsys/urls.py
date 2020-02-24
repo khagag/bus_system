@@ -18,6 +18,7 @@ from django.urls import path
 from . import views
 from django.contrib.auth.decorators import login_required
 
+## TODO: add permissions to the crud form pages to prevent drivers from modifing other drivers/users data
 app_name = 'bsys'
 urlpatterns = [
     path("",views.index,name ='index'),
