@@ -13,7 +13,11 @@ class BusCreationForm(forms.ModelForm):
         widgets = {
                 'lastCheckUp': forms.DateInput(format=('%m/%d/%Y'), attrs={'class':'form-control', 'placeholder':'Select a date', 'type':'date'}),
             }
-
+            
+class ToggleBusStatus(forms.ModelForm):
+    class Meta:
+        model = MD.Bus
+        fields = ["status"]
 
 class DriverSignUpForm(UserCreationForm):
     bus = forms.ModelChoiceField(MD.Bus.objects.all(),required=False,label="choose bus")
