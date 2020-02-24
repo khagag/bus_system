@@ -31,8 +31,12 @@ def profile(request):
     if request.user.is_admin:
         return render(request, 'profile/admin.html',{"drivers":MD.Driver.objects.all()})
     elif request.user.is_driver:
-
-        return render(request, 'profile/driver.html')
+        driver_data = MD.Driver.objects.get(pk=request.user.id)
+        form = FM.ToggleBusStatus()
+        ## TODO: update driver profile view to show it's data
+        ## TODO: create a form to allow driver to update bus status
+        logger.warning(driver_data.bus)
+        return render(request, 'profile/driver.html',{"driver":driver_data,"form":form})
     else:
         return redirect("/admin/")
 
@@ -68,6 +72,8 @@ class DriverUpdatePersonal(UpdateView):
 
 
 def index(request):
+    DrForm = FM.DriverAuthForm()
+    AdForm = FM.ManagerAuthForm()
     if request.user.is_authenticated:
         return redirect('/profile/')
     if request.method == 'POST':
