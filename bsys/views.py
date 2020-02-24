@@ -83,7 +83,7 @@ def index(request):
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password')
             user = authenticate(request, username=username, password=raw_password)
-            logger.warning(user.first_nam)
+            logger.warning(user.first_name)
             if user is not None:
                 logger.warning("user not none")
                 # user = authenticate(request,username=username, password=raw_password)
